@@ -29,6 +29,8 @@ app.post('/webhook/', function (req, res) {
       if (text === 'Generic') {
         sendGenericMessage(sender)
         continue
+      } else if (text.indexOf("startups") !== -1) {
+        sendTextMessage(sender, "omg, i'm so over startups")
       }
       sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
     }
@@ -96,10 +98,14 @@ function sendGenericMessage(sender) {
   }
   request({
     url: 'https://graph.facebook.com/v2.6/me/messages',
-    qs: {access_token:secrets.PAGE_ACCESS_TOKEN},
+    qs: {
+      access_token: secrets.PAGE_ACCESS_TOKEN
+    },
     method: 'POST',
     json: {
-      recipient: {id:sender},
+      recipient: {
+        id: sender
+      },
       message: messageData,
     }
   }, function(error, response, body) {
