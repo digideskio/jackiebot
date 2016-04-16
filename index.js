@@ -28,11 +28,11 @@ app.post('/webhook/', function (req, res) {
       text = event.message.text
       if (text === 'Generic') {
         sendGenericMessage(sender)
-        continue
       } else if (text.indexOf("startups") !== -1) {
         sendTextMessage(sender, "omg, i'm so over startups")
+      } else {
+        sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
       }
-      sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
     }
     if (event.postback) {
       text = JSON.stringify(event.postback)
