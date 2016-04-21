@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
 app.get('/', function (req, res) {
-  res.send('heyyy! what\'s up?')
+  res.send('Hello!')
 })
 
 app.get('/webhook/', function (req, res) {
@@ -20,8 +20,8 @@ app.get('/webhook/', function (req, res) {
 })
 
 app.post('/webhook/', function (req, res) {
-  messaging_events = req.body.entry[0].messaging
-  for (i = 0; i < messaging_events.length; i++) {
+  messagingEvents = req.body.entry[0].messaging
+  for (i = 0; i < messagingEvents.length; i++) {
     event = req.body.entry[0].messaging[i]
     sender = event.sender.id
     if (event.message && event.message.text) {
@@ -36,7 +36,7 @@ app.post('/webhook/', function (req, res) {
     }
     if (event.postback) {
       text = JSON.stringify(event.postback)
-      sendTextMessage(sender, "Postback received: "+text.substring(0, 200), secrets.PAGE_ACCESS_TOKEN)
+      sendTextMessage(sender, "Postback received: " + text.substring(0, 200), secrets.PAGE_ACCESS_TOKEN)
       continue
     }
   }
@@ -45,7 +45,7 @@ app.post('/webhook/', function (req, res) {
 
 function sendTextMessage(sender, text) {
   messageData = {
-    text:text
+    text: text
   }
   request({
     url: 'https://graph.facebook.com/v2.6/me/messages',
